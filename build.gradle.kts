@@ -1,11 +1,11 @@
 plugins {
-    id("java")
+    java
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "ru.vasmarfas"
-version = "1.0-SNAPSHOT"
+group = "com.edumaster"
+version = "1.0.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -15,24 +15,25 @@ repositories {
     mavenCentral()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.testcontainers:testcontainers-bom:1.19.3")
-    }
-}
-
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // Spring Boot Starters (минимум)
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // ★★★ ДОБАВЬТЕ ЭТУ СТРОКУ ★★★
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    runtimeOnly("org.postgresql:postgresql")
+
+    // База данных
     runtimeOnly("com.h2database:h2")
+
+    // Тестирование
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.bootJar {
+    archiveFileName.set("edumaster-platform.jar")
 }

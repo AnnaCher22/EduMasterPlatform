@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: EduMaster-Platform
+
+  # H2 in-memory база (не требует установки PostgreSQL)
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create  # Автоматически создаёт таблицы
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Меняем порт (на случай если 8080 занят)
+server:
+  port: 8081
+
+# Минимальное логирование
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate: ERROR
